@@ -46,12 +46,14 @@ for i in range(num_of_enemies):
 
 # Ready - You can't see the bullet on the screen
 # Fire - The bullet is currently moving
-
+clock = pygame.time.Clock()
+FPS = 70  # set the maximum number of frames per second
+clock.tick(FPS)
 bulletImg = pygame.image.load('bullet.png')
 bulletX = 0
 bulletY = 480   #the same as the player 
 bulletX_change = 0  #thus when the bullet will be fired there will be no change in the x direction only in the y direction
-bulletY_change = 10
+bulletY_change = 50
 bullet_state = "ready"    # Ready - You can't see the bullet on the screen
 
 # Score
