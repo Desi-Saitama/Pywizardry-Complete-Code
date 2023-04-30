@@ -143,6 +143,7 @@ while running:
         if enemyY[i] > 440:
             for j in range(num_of_enemies):
                 enemyY[j] = 2000   #to remove them from the screen (all of the enemies)
+            bullet_state=False # no firing after game over    
             game_over_text()
             break
 
@@ -175,6 +176,8 @@ while running:
     if bullet_state == "fire":
         fire_bullet(bulletX, bulletY)
         bulletY -= bulletY_change
+    if bullet_state ==  False:
+        fire_bullet(0,0)     
 
     player(playerX, playerY)
     show_score(textX, testY)
