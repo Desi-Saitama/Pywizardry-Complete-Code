@@ -66,6 +66,8 @@ testY = 10
 
 # Game Over Text
 over_font = pygame.font.Font('freesansbold.ttf', 64)
+# Score Count Text
+count_font = pygame.font.Font('freesansbold.ttf', 75)
 
 def show_score(x, y):
     global score_state
@@ -78,8 +80,13 @@ def show_score(x, y):
 def game_over_text():  
     over_text = over_font.render("GAME OVER", True, (255, 255, 255))  #True so that the text appears in a smooth or jagged way.
     screen.blit(over_text, (200, 250))  
-    return True
+    
+def score_count(x,y):                 
+    count_text = count_font.render("+1", True, (255, 255, 255))
+    
+    screen.blit(count_text, (x,y))
 
+    
 
 def player(x, y):
     screen.blit(playerImg, (x, y))
@@ -140,7 +147,7 @@ while running:
     playerX += playerX_change
     if playerX <= 0:   #we have reached the far left edge of the screen
         playerX = 0
-    elif playerX >= 736:   # we have reached the riht edge of the screen
+    elif playerX >= 736:   # we have reached the right edge of the screen
         playerX = 736
 
     # Enemy Movement
@@ -171,6 +178,8 @@ while running:
         if collision:
             explosionSound = mixer.Sound("explosion.wav")
             explosionSound.play()
+            score_count(enemyX[i], enemyY[i])   #  on collisions' area +1 score will pop up 
+            
             bulletY = 480   #the same as before
             bullet_state = "ready"
             score_value += 1  
