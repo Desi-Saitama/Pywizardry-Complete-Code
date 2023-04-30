@@ -140,6 +140,7 @@ while running:
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 playerX_change = 0   #whatever key that I have pressed means that my spaceship cannot move at that point.
+                
 
     # 5 = 5 + -0.1 -> 5 = 5 - 0.1
     # 5 = 5 + 0.1
@@ -160,8 +161,11 @@ while running:
             bullet_state=False # no firing after game over   
             score_state=False 
             player(2000,2000)  # invisible player after gave over 
-            game_over_text()
             
+            game_over_text()
+            #end the game after enter key pressed
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                running=False
             
             break
 
@@ -204,6 +208,7 @@ while running:
         player(playerX, playerY)
     else:
         show_score(290, 195)
+        
                   
     
     
