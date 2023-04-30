@@ -55,7 +55,7 @@ bulletY = 480   #the same as the player
 bulletX_change = 0  #thus when the bullet will be fired there will be no change in the x direction only in the y direction
 bulletY_change = 50
 bullet_state = "ready"    # Ready - You can't see the bullet on the screen
-
+score_state = True
 # Score
 
 score_value = 0     
@@ -68,13 +68,17 @@ testY = 10
 over_font = pygame.font.Font('freesansbold.ttf', 64)
 
 def show_score(x, y):
+    global score_state
+    score_state = True
     score = font.render("Score : " + str(score_value), True, (255, 255, 255))
     screen.blit(score, (x, y))   #s o the blit copies the pixels of one image onto the other image
                                  #(x,y)  is the positional coordinates passed onto the blit for displaying the score at the speciifed poistion
+    score_state = True                             
 
 def game_over_text():  
     over_text = over_font.render("GAME OVER", True, (255, 255, 255))  #True so that the text appears in a smooth or jagged way.
     screen.blit(over_text, (200, 250))  
+    return True
 
 
 def player(x, y):
@@ -99,6 +103,7 @@ def isCollision(enemyX, enemyY, bulletX, bulletY):  # this function as the name 
         return False  
 
 
+
 # Game Loop
 running = True
 while running:
@@ -114,9 +119,9 @@ while running:
         # if keystroke is pressed check whether its right or left
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                playerX_change = -5   #in the left direction 
+                playerX_change = -7   #in the left direction 
             if event.key == pygame.K_RIGHT:
-                playerX_change = 5    #in the right direction.
+                playerX_change = 7    #in the right direction.
             if event.key == pygame.K_SPACE:     # to fire the bullet we will press the K_SPACE
                 if bullet_state is "ready":     
                     bulletSound = mixer.Sound("laser.wav")
@@ -140,13 +145,17 @@ while running:
 
     # Enemy Movement
     for i in range(num_of_enemies):
-
+        
         # Game Over
         if enemyY[i] > 440:
             for j in range(num_of_enemies):
                 enemyY[j] = 2000   #to remove them from the screen (all of the enemies)
-            bullet_state=False # no firing after game over    
+            bullet_state=False # no firing after game over   
+            score_state=False 
+            player(2000,2000)  # invisible player after gave over 
             game_over_text()
+            
+            
             break
 
         enemyX[i] += enemyX_change[i]   #These define the movements of the enemy
@@ -179,8 +188,15 @@ while running:
         fire_bullet(bulletX, bulletY)
         bulletY -= bulletY_change
     if bullet_state ==  False:
-        fire_bullet(0,0)     
-
-    player(playerX, playerY)
-    show_score(textX, testY)
+        fire_bullet(2000,2000)        
+      
+    if score_state == True:        #if game not over showing score in corer else in the middle 
+        show_score(textX, testY)
+        player(playerX, playerY)
+    else:
+        show_score(290, 195)
+                  
+    
+    
+    
     pygame.display.update()
