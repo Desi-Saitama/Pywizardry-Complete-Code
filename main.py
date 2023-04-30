@@ -111,8 +111,11 @@ def isCollision(enemyX, enemyY, bulletX, bulletY):  # this function as the name 
 
 
 
+        
 # Game Loop
 running = True
+
+    
 while running:
 
     # RGB = Red, Green, Blue
@@ -130,7 +133,7 @@ while running:
             if event.key == pygame.K_RIGHT:
                 playerX_change = 7    #in the right direction.
             if event.key == pygame.K_SPACE:     # to fire the bullet we will press the K_SPACE
-                if bullet_state is "ready":     
+                if bullet_state == "ready":     
                     bulletSound = mixer.Sound("laser.wav")
                     bulletSound.play()
                     # Get the current x cordinate of the spaceship
@@ -161,11 +164,23 @@ while running:
             bullet_state=False # no firing after game over   
             score_state=False 
             player(2000,2000)  # invisible player after gave over 
+            # Sound
+            mixer.music.load("background.wav")
+            mixer.music.play(0)  
             
+            #gameOverSound
+       
+            #gameOverSound
+
+            game_over_sound = mixer.Sound("gameOver.wav") 
+            game_over_sound.play()    
             game_over_text()
+            
+           
             #end the game after enter key pressed
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                 running=False
+                
             
             break
 
@@ -209,8 +224,11 @@ while running:
     else:
         show_score(290, 195)
         
+        
+    
                   
     
     
     
     pygame.display.update()
+    
