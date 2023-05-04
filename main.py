@@ -185,12 +185,31 @@ while running:
             break
 
         enemyX[i] += enemyX_change[i]   #These define the movements of the enemy
+        
         if enemyX[i] <= 0:    #these are for the left edge.
-            enemyX_change[i] = 4      
-            enemyY[i] += enemyY_change[i] 
+             #increase speed of enemy as score value crosses 10,25 and between 10-25
+            '''   when score is less than 10 it will move +4 in x and -4 in y, if score is between 10-25 change in x by 9 , change in y  by -6.5 ,
+              and when  score exceeds 25 change in x by 6 and change in y by -5.5'''
+            if score_value<10 :         
+             enemyX_change[i] = 4
+             enemyY[i] += enemyY_change[i] 
+            elif score_value>=25:       
+             enemyX_change[i] = 9
+             enemyY[i] += enemyY_change[i] 
+            else:
+                 enemyX_change[i] = 6
+                 enemyY[i] += enemyY_change[i] 
+             
         elif enemyX[i] >= 736:
-            enemyX_change[i] = -4
-            enemyY[i] += enemyY_change[i]
+            if score_value<10 : 
+                enemyX_change[i] = -4
+                enemyY[i] += enemyY_change[i]
+            elif score_value>=25: 
+                enemyX_change[i] = -6.5
+                enemyY[i] += enemyY_change[i]
+            else:
+                enemyX_change[i] = -5.5
+                enemyY[i] += enemyY_change[i]    
 
         # Collision
         collision = isCollision(enemyX[i], enemyY[i], bulletX, bulletY)
